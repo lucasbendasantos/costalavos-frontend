@@ -13,7 +13,7 @@ export class PedidoService {
   constructor(private http: HttpClient) { }
 
   listAll(): Observable<PedidoVendaProdutoList>{
-    var body = {"pagina":1,"registros_por_pagina":3,"apenas_importado_api":"N"}
+    var body = {"pagina":1,"registros_por_pagina":14,"apenas_importado_api":"N"}
     return this.http.post<PedidoVendaProdutoList>(this.apiUrl, body);
   }
 

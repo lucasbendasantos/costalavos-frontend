@@ -71,9 +71,12 @@ export class HomeComponent implements OnInit {
         console.log("DENTRO DO getPEDIDOS")
         console.log(data)
         this.element = data;
-    })
-    
-    console.log("FORA DO GETPEDIDOS")
+        this.openDialog2(data);
+      })
+
+
+
+/**    console.log("FORA DO GETPEDIDOS")
     console.log(this.element)
 
     const dialogRef = this.dialog.open(ElementDialogComponent, {
@@ -87,6 +90,26 @@ export class HomeComponent implements OnInit {
         this.table.renderRows();
       }
     });
+ */
+  }
+
+
+  openDialog2(element: PedidoVendaProduto): void{
+    console.log("FORA DO GETPEDIDOS")
+    console.log(element)
+
+    const dialogRef = this.dialog.open(ElementDialogComponent, {
+      width: '100%',
+      data: element
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result !== undefined){
+        this.dataSource.push(result);
+        this.table.renderRows();
+      }
+    });
+
   }
 
 }

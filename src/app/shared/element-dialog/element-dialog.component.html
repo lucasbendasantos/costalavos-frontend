@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Pedido</h1>
+<h1 mat-dialog-title>Pedido {{data.pedido_venda_produto.cabecalho.codigo_pedido}}</h1>
 
 
 
@@ -36,7 +36,7 @@
                 />
               </td>
               <td style="font-size: 12pt; text-align: center; padding: 3px">
-                <strong>Costa Lavos</strong> <br />Pedido N&ordm; {{element.cabecalho.codigo_pedido}}
+                <strong>Costa Lavos</strong> <br />Pedido N&ordm; {{data.pedido_venda_produto.cabecalho.codigo_pedido}}
               </td>
               <td style="width: 210px; padding: 3px">&nbsp;</td>
             </tr>
@@ -74,49 +74,47 @@
           <tbody>
             <tr>
               <td style="width: 50%; padding: 3px">
-                <strong>Cliente:</strong> MERCADINHO SHANGRILA SIQUEIRA .C
-                EIRELI
+                <strong>Cliente:</strong> {{data.pedido_venda_produto.cliente.razao_social}}
               </td>
               <td style="width: 50%; padding: 3px">
-                <strong>Nome Fantasia:</strong> SHANGRILA
+                <strong>Nome Fantasia:</strong> {{data.pedido_venda_produto.cliente.nome_fantasia}}
               </td>
             </tr>
             <tr>
               <td style="width: 50%; padding: 3px">
-                <strong>CNPJ:</strong> 39.158.088/0001-00
+                <strong>CNPJ:</strong> {{data.pedido_venda_produto.cliente.cnpj_cpf}}
               </td>
               <td style="width: 50%; padding: 3px">
-                <strong>Inscri&ccedil;&atilde;o Estadual:</strong> 129782026112
+                <strong>Inscri&ccedil;&atilde;o Estadual:</strong> {{data.pedido_venda_produto.cliente.inscricao_estadual}}
               </td>
             </tr>
             <tr>
               <td style="padding: 3px" colspan="2">
-                <strong>Endere&ccedil;o:</strong> AVENIDA DONA BELMIRA MARIN
-                5960 LOJA MERCADINHO
+                <strong>Endere&ccedil;o:</strong> {{data.pedido_venda_produto.cliente.endereco}} {{data.pedido_venda_produto.cliente.endereco_numero}}
               </td>
             </tr>
             <tr>
               <td style="width: 50%; padding: 3px">
-                <strong>Bairro:</strong> PARQUE BRASIL
+                <strong>Bairro:</strong> {{data.pedido_venda_produto.cliente.bairro}}
               </td>
               <td style="width: 50%; padding: 3px">
-                <strong>CEP:</strong> 04846-010
-              </td>
-            </tr>
-            <tr>
-              <td style="width: 50%; padding: 3px">
-                <strong>Cidade:</strong> SAO PAULO
-              </td>
-              <td style="width: 50%; padding: 3px">
-                <strong>Estado:</strong> S&atilde;o Paulo
+                <strong>CEP:</strong> {{data.pedido_venda_produto.cliente.cep}}
               </td>
             </tr>
             <tr>
               <td style="width: 50%; padding: 3px">
-                <strong>Telefone:</strong> -----
+                <strong>Cidade:</strong> {{data.pedido_venda_produto.cliente.cidade}}
               </td>
               <td style="width: 50%; padding: 3px">
-                <strong>E-mail:</strong> jorge_alan2011@hotmail.com
+                <strong>Estado:</strong> {{data.pedido_venda_produto.cliente.estado}}
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 50%; padding: 3px">
+                <strong>Telefone:</strong> {{data.pedido_venda_produto.cliente.telefone1_ddd}} {{data.pedido_venda_produto.cliente.telefone1_numero}}
+              </td>
+              <td style="width: 50%; padding: 3px">
+                <strong>E-mail:</strong> {{data.pedido_venda_produto.cliente.email}}
               </td>
             </tr>
           </tbody>
