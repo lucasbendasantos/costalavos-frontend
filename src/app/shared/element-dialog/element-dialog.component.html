@@ -91,7 +91,7 @@
             </tr>
             <tr>
               <td style="padding: 3px" colspan="2">
-                <strong>Endere&ccedil;o:</strong> {{data.pedido_venda_produto.cliente.endereco}} {{data.pedido_venda_produto.cliente.endereco_numero}}
+                <strong>Endere&ccedil;o:</strong> {{data.pedido_venda_produto.cliente.endereco}} {{data.pedido_venda_produto.cliente.endereco_numero}} {{data.pedido_venda_produto.cliente.complemento}}
               </td>
             </tr>
             <tr>
@@ -380,7 +380,7 @@
                 align="right"
                 width="140"
               >
-                <strong>R$ 1.412,50</strong>
+                <strong>R$ {{data.pedido_venda_produto.total_pedido.valor_aberto}}</strong>
               </td>
             </tr>
             <tr
@@ -409,7 +409,7 @@
                 align="right"
                 width="140"
               >
-                <strong>R$ 1.412,50</strong>
+                <strong>R$ {{data.pedido_venda_produto.total_pedido.valor_total_cliente}}</strong>
               </td>
             </tr>
           </tbody>
@@ -428,7 +428,7 @@
                 <strong>Condi&ccedil;&atilde;o de Pagamento:</strong> A Vista
               </td>
               <td style="padding: 3px; width: 30%">
-                <strong>Data de Emiss&atilde;o:</strong> 02/02/2022
+                <strong>Data de Emiss&atilde;o:</strong> {{data.pedido_venda_produto.cabecalho.data_previsao}}
               </td>
             </tr>
           </tbody>
@@ -444,7 +444,7 @@
           <tbody>
             <tr>
               <td style="padding: 3px">
-                <strong>data_entrega: </strong> {{data.pedido_venda_produto.frete.previsao_entrega}}
+                <strong>data_entrega: </strong> {{data.pedido_venda_produto.cabecalho.data_previsao}}
               </td>
               <td style="padding: 3px; width: 30%">
                 <strong>Fantasia: </strong>{{data.pedido_venda_produto.cliente.nome_fantasia}}
