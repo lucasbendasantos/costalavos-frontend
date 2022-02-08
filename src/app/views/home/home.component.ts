@@ -64,9 +64,9 @@ export class HomeComponent implements OnInit {
 
   }
 
-  viewPDF(codigoPedido: number): void{
+  viewPDF(numeroPedido: number): void{
 
-    this.pedidoService.getPedido(codigoPedido)
+    this.pedidoService.getPedido(+numeroPedido)
       .subscribe((data: PedidoVendaProduto) => {
         console.log("DENTRO DO getPEDIDOS")
         console.log(data)

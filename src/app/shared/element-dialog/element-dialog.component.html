@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Pedido {{data.pedido_venda_produto.cabecalho.codigo_pedido}}</h1>
+<h1 mat-dialog-title>Pedido {{data.pedido_venda_produto.cabecalho.numero_pedido}} - {{data.pedido_venda_produto.cliente.nome_fantasia}}</h1>
 
 
 
@@ -18,7 +18,7 @@
       id="conteudo_imprimir"
       style="width: 840px; margin: 0 auto; padding-bottom: 20px"
     >
-      <div class="pedido_html">
+      <div class="pedido_html" >
         <table
           style="
             border: 2px solid #000000;
@@ -27,8 +27,9 @@
             border-collapse: collapse;
             border-bottom: 0;
           "
+
         >
-          <tbody>
+          <tbody >
             <tr>
               <td style="width: 210px; padding: 3px">
                 <img
@@ -36,7 +37,7 @@
                 />
               </td>
               <td style="font-size: 12pt; text-align: center; padding: 3px">
-                <strong>Costa Lavos</strong> <br />Pedido N&ordm; {{data.pedido_venda_produto.cabecalho.codigo_pedido}}
+                <strong>Costa Lavos</strong> <br />Pedido N&ordm; {{data.pedido_venda_produto.cabecalho.numero_pedido}}
               </td>
               <td style="width: 210px; padding: 3px">&nbsp;</td>
             </tr>
@@ -129,7 +130,7 @@
           "
           width="100%"
         >
-          <tbody>
+          <tbody >
             <tr>
               <td style="border: 1px solid #888; padding: 3px; font-size: 13px">
                 <strong>Produto</strong>
@@ -200,6 +201,7 @@
                 <strong>Subtotal</strong>
               </td>
             </tr>
+
             <tr
               style="
                 border-collapse: collapse;
@@ -210,6 +212,7 @@
                 width: 100%;
                 border-bottom: 0;
               "
+              *ngFor="let pedido of listaProdutos"
             >
               <td
                 style="
@@ -223,7 +226,8 @@
                   <tbody>
                     <tr>
                       <td style="font-size: 13px">
-                        514 - CROISSANT DE PRESUNTO E QUEIJO
+
+                        {{pedido.produto.codigo}} - {{pedido.produto.descricao}}
                       </td>
                     </tr>
                   </tbody>
@@ -241,7 +245,7 @@
                 align="center"
                 width="65"
               >
-                1 PCT
+              {{pedido.produto.quantidade}} {{pedido.produto.unidade}}
               </td>
               <td
                 style="
@@ -255,7 +259,7 @@
                 align="right"
                 width="100"
               >
-                R$ 40,62
+              R$ {{pedido.produto.valor_unitario}}
               </td>
               <td
                 style="
@@ -283,7 +287,7 @@
                 align="right"
                 width="118"
               >
-                R$ 40,62
+              R$ {{pedido.produto.valor_unitario}}
               </td>
               <td
                 style="
@@ -297,609 +301,15 @@
                 align="right"
                 width="100"
               >
-                R$ 40,62
+              R$ {{pedido.produto.valor_total}}
               </td>
             </tr>
-            <tr
-              style="
-                border-collapse: collapse;
-                border-left: 2px solid #000;
-                border-right: 2px solid #000;
-                padding: 5px;
-                page-break-inside: avoid;
-                width: 100%;
-                border-bottom: 0;
-              "
-            >
-              <td
-                style="
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                "
-              >
-                <table>
-                  <tbody>
-                    <tr>
-                      <td style="font-size: 13px">
-                        511 - CROISSANT DE CALABRESA
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </td>
-              <td
-                style="
-                  text-align: center;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                  width: 65px;
-                "
-                align="center"
-                width="65"
-              >
-                1 PCT
-              </td>
-              <td
-                style="
-                  text-align: right;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                  width: 100px;
-                "
-                align="right"
-                width="100"
-              >
-                R$ 40,62
-              </td>
-              <td
-                style="
-                  text-align: center;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                  width: 100px;
-                "
-                align="center"
-                width="100"
-              >
-                -----
-              </td>
-              <td
-                style="
-                  text-align: right;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                  width: 118px;
-                "
-                align="right"
-                width="118"
-              >
-                R$ 40,62
-              </td>
-              <td
-                style="
-                  text-align: right;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                  width: 100px;
-                "
-                align="right"
-                width="100"
-              >
-                R$ 40,62
-              </td>
-            </tr>
-            <tr
-              style="
-                border-collapse: collapse;
-                border-left: 2px solid #000;
-                border-right: 2px solid #000;
-                padding: 5px;
-                page-break-inside: avoid;
-                width: 100%;
-                border-bottom: 0;
-              "
-            >
-              <td
-                style="
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                "
-              >
-                <table>
-                  <tbody>
-                    <tr>
-                      <td style="font-size: 13px">
-                        510 - CROISSANT DE 3 QUEIJOS
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </td>
-              <td
-                style="
-                  text-align: center;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                  width: 65px;
-                "
-                align="center"
-                width="65"
-              >
-                1 PCT
-              </td>
-              <td
-                style="
-                  text-align: right;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                  width: 100px;
-                "
-                align="right"
-                width="100"
-              >
-                R$ 40,62
-              </td>
-              <td
-                style="
-                  text-align: center;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                  width: 100px;
-                "
-                align="center"
-                width="100"
-              >
-                -----
-              </td>
-              <td
-                style="
-                  text-align: right;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                  width: 118px;
-                "
-                align="right"
-                width="118"
-              >
-                R$ 40,62
-              </td>
-              <td
-                style="
-                  text-align: right;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                  width: 100px;
-                "
-                align="right"
-                width="100"
-              >
-                R$ 40,62
-              </td>
-            </tr>
-            <tr
-              style="
-                border-collapse: collapse;
-                border-left: 2px solid #000;
-                border-right: 2px solid #000;
-                padding: 5px;
-                page-break-inside: avoid;
-                width: 100%;
-                border-bottom: 0;
-              "
-            >
-              <td
-                style="
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                "
-              >
-                <table>
-                  <tbody>
-                    <tr>
-                      <td style="font-size: 13px">
-                        500 - PAO DE QUEIJO - 20 GRAMAS
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </td>
-              <td
-                style="
-                  text-align: center;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                  width: 65px;
-                "
-                align="center"
-                width="65"
-              >
-                2 PCT
-              </td>
-              <td
-                style="
-                  text-align: right;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                  width: 100px;
-                "
-                align="right"
-                width="100"
-              >
-                R$ 44,66
-              </td>
-              <td
-                style="
-                  text-align: center;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                  width: 100px;
-                "
-                align="center"
-                width="100"
-              >
-                -----
-              </td>
-              <td
-                style="
-                  text-align: right;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                  width: 118px;
-                "
-                align="right"
-                width="118"
-              >
-                R$ 44,66
-              </td>
-              <td
-                style="
-                  text-align: right;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                  width: 100px;
-                "
-                align="right"
-                width="100"
-              >
-                R$ 89,32
-              </td>
-            </tr>
-            <tr
-              style="
-                border-collapse: collapse;
-                border-left: 2px solid #000;
-                border-right: 2px solid #000;
-                padding: 5px;
-                page-break-inside: avoid;
-                width: 100%;
-                border-bottom: 0;
-              "
-            >
-              <td
-                style="
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                "
-              >
-                <table>
-                  <tbody>
-                    <tr>
-                      <td style="font-size: 13px">
-                        202 - MASSA CONGELADA PAO DOCE - KG
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </td>
-              <td
-                style="
-                  text-align: center;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                  width: 65px;
-                "
-                align="center"
-                width="65"
-              >
-                3 PCT
-              </td>
-              <td
-                style="
-                  text-align: right;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                  width: 100px;
-                "
-                align="right"
-                width="100"
-              >
-                R$ 29,37
-              </td>
-              <td
-                style="
-                  text-align: center;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                  width: 100px;
-                "
-                align="center"
-                width="100"
-              >
-                -----
-              </td>
-              <td
-                style="
-                  text-align: right;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                  width: 118px;
-                "
-                align="right"
-                width="118"
-              >
-                R$ 29,37
-              </td>
-              <td
-                style="
-                  text-align: right;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                  width: 100px;
-                "
-                align="right"
-                width="100"
-              >
-                R$ 88,11
-              </td>
-            </tr>
-            <tr
-              style="
-                border-collapse: collapse;
-                border-left: 2px solid #000;
-                border-right: 2px solid #000;
-                padding: 5px;
-                page-break-inside: avoid;
-                width: 100%;
-                border-bottom: 0;
-              "
-            >
-              <td
-                style="
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                "
-              >
-                <table>
-                  <tbody>
-                    <tr>
-                      <td style="font-size: 13px">
-                        102 - MASSA PAO FRANCES CONGELADO LENTA - KG
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </td>
-              <td
-                style="
-                  text-align: center;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                  width: 65px;
-                "
-                align="center"
-                width="65"
-              >
-                18 PCT
-              </td>
-              <td
-                style="
-                  text-align: right;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                  width: 100px;
-                "
-                align="right"
-                width="100"
-              >
-                R$ 35,91
-              </td>
-              <td
-                style="
-                  text-align: center;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                  width: 100px;
-                "
-                align="center"
-                width="100"
-              >
-                -----
-              </td>
-              <td
-                style="
-                  text-align: right;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                  width: 118px;
-                "
-                align="right"
-                width="118"
-              >
-                R$ 35,91
-              </td>
-              <td
-                style="
-                  text-align: right;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                  width: 100px;
-                "
-                align="right"
-                width="100"
-              >
-                R$ 646,38
-              </td>
-            </tr>
-            <tr
-              style="
-                border-collapse: collapse;
-                border-left: 2px solid #000;
-                border-right: 2px solid #000;
-                padding: 5px;
-                page-break-inside: avoid;
-                width: 100%;
-                border-bottom: 0;
-              "
-            >
-              <td
-                style="
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                "
-              >
-                <table>
-                  <tbody>
-                    <tr>
-                      <td style="font-size: 13px">
-                        100 - MASSA PAO FRANCES CONGELADO MANHA - KG
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </td>
-              <td
-                style="
-                  text-align: center;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                  width: 65px;
-                "
-                align="center"
-                width="65"
-              >
-                13 PCT
-              </td>
-              <td
-                style="
-                  text-align: right;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                  width: 100px;
-                "
-                align="right"
-                width="100"
-              >
-                R$ 35,91
-              </td>
-              <td
-                style="
-                  text-align: center;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                  width: 100px;
-                "
-                align="center"
-                width="100"
-              >
-                -----
-              </td>
-              <td
-                style="
-                  text-align: right;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                  width: 118px;
-                "
-                align="right"
-                width="118"
-              >
-                R$ 35,91
-              </td>
-              <td
-                style="
-                  text-align: right;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                  width: 100px;
-                "
-                align="right"
-                width="100"
-              >
-                R$ 466,83
-              </td>
-            </tr>
+
+
+
+
+
+
           </tbody>
         </table>
         <table
@@ -941,7 +351,7 @@
                 align="right"
                 width="140"
               >
-                <strong>R$ 1.412,50</strong>
+                <strong>R$ {{data.pedido_venda_produto.total_pedido.valor_total_pedido}}</strong>
               </td>
             </tr>
             <tr
@@ -1034,10 +444,10 @@
           <tbody>
             <tr>
               <td style="padding: 3px">
-                <strong>data_entrega: </strong> 03/02/2022
+                <strong>data_entrega: </strong> {{data.pedido_venda_produto.frete.previsao_entrega}}
               </td>
               <td style="padding: 3px; width: 30%">
-                <strong>Fantasia: </strong>SHANGRILA
+                <strong>Fantasia: </strong>{{data.pedido_venda_produto.cliente.nome_fantasia}}
               </td>
             </tr>
           </tbody>
@@ -1052,7 +462,7 @@
         >
           <tbody>
             <tr>
-              <td style="padding: 3px"><strong>pedido_erp: </strong> 348224</td>
+              <td style="padding: 3px"><strong>pedido_erp: </strong> {{data.pedido_venda_produto.cabecalho.numero_pedido}}</td>
             </tr>
           </tbody>
         </table>
@@ -1115,7 +525,7 @@
           <tbody>
             <tr>
               <td style="padding: 3px">
-                <strong>Transportadora:</strong> Nosso Carro
+                <strong>Transportadora:</strong> {{data.pedido_venda_produto.frete.codigo_transportadora}}
               </td>
             </tr>
           </tbody>
@@ -1132,7 +542,7 @@
             <tr>
               <td style="padding: 3px; word-break: break-word">
                 <strong>Informa&ccedil;&otilde;es Adicionais:</strong
-                ><br />SHANGRILA
+                ><br />{{data.pedido_venda_produto.cliente.nome_fantasia}}
               </td>
             </tr>
           </tbody>

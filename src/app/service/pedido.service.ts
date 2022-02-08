@@ -17,7 +17,7 @@ export class PedidoService {
     return this.http.post<PedidoVendaProdutoList>(this.apiUrl, body);
   }
 
-  getPedido(codigoPedido: number): Observable<PedidoVendaProduto>{
-    return this.http.get<PedidoVendaProduto>(`${this.apiUrl}?codigo_pedido=${codigoPedido}`);
+  getPedido(numeroPedido: number): Observable<PedidoVendaProduto>{
+    return this.http.get<PedidoVendaProduto>(`${this.apiUrl}?numero_pedido=${numeroPedido}`);
   }
 }
