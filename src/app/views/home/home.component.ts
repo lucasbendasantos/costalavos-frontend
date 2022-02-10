@@ -1,3 +1,4 @@
+import { Cabecalho } from './../../model/cabecalho';
 import { PedidoVendaProduto } from './../../model/pedido-venda-produto';
 import { PedidoVendaProdutoList } from '../../model/pedido-venda-produto-list';
 import { PedidoService } from './../../service/pedido.service';
@@ -8,7 +9,13 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTable } from '@angular/material/table';
 import { delay } from 'rxjs';
 
+declare var require: any;
 
+import * as pdfMake from "pdfmake/build/pdfmake";
+import * as pdfFonts from "pdfmake/build/vfs_fonts";
+import { PDFGeneratorComponent } from 'src/app/shared/pdfgenerator/pdfgenerator.component';
+const htmlToPdfmake = require("html-to-pdfmake");
+(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'app-home',
@@ -23,6 +30,11 @@ export class HomeComponent implements OnInit {
   displayedColumns: string[] = ['pedido', 'data', 'cliente', 'endereco', 'itens', 'total', 'actions'];
   dataSource!: any[];
   element: any = {};
+  firstElement: any = {}
+
+
+  pdfGenerator!: PDFGeneratorComponent;
+
 
   constructor(
     public dialog: MatDialog,
@@ -32,7 +44,7 @@ export class HomeComponent implements OnInit {
         this.pedidoService.listAll()
           .subscribe((data: PedidoVendaProdutoList) => {
             this.dataSource = data.pedido_venda_produto;
-
+            this.firstElement = data.pedido_venda_produto[0];
           })
 
     }
@@ -73,24 +85,6 @@ export class HomeComponent implements OnInit {
         this.element = data;
         this.openDialog2(data);
       })
-
-
-
-/**    console.log("FORA DO GETPEDIDOS")
-    console.log(this.element)
-
-    const dialogRef = this.dialog.open(ElementDialogComponent, {
-      width: '100%',
-      data: this.element
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if(result !== undefined){
-        this.dataSource.push(result);
-        this.table.renderRows();
-      }
-    });
- */
   }
 
 
@@ -111,5 +105,29 @@ export class HomeComponent implements OnInit {
     });
 
   }
+
+
+
+
+  public  async downloadAsPDF(element: PedidoVendaProduto) {
+    this.firstElement = element;
+
+    console.log("DELAY 15 Segundos")
+    await this.delay(1500);
+
+    this.pdfGenerator = new PDFGeneratorComponent();
+    this.pdfGenerator.buildPDF(this.firstElement);
+  }
+
+
+
+private delay(ms: number): Promise<boolean> {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(true);
+    }, ms);
+  });
+}
+
 
 }

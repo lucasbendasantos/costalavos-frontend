@@ -1,10 +1,5 @@
-<h1 mat-dialog-title>
-  Pedido {{ data.pedido_venda_produto.cabecalho.numero_pedido }} -
-  {{ data.pedido_venda_produto.cliente.nome_fantasia }}
-</h1>
-
-<div class="container">
-  <div mat-dialog-content id="pdfTable" #pdfTable>
+<div class="container" hidden *ngIf="_reload">
+  <div mat-dialog-content id="tabela" #tabela >
     <table
       style="border-collapse: collapse; width: 100%; height: 156px"
       border="1"
@@ -25,7 +20,7 @@
                   </td>
                   <td style="width: 80.5714%">
                     <h1 style="text-align: center">Costa Lavos</h1>
-                    <h3 style="text-align: center">Pedido N&ordm; {{ data.pedido_venda_produto.cabecalho.numero_pedido }}</h3>
+                    <h3 style="text-align: center">Pedido N&ordm; {{ element.cabecalho.numero_pedido }}</h3>
                   </td>
                 </tr>
               </tbody>
@@ -42,21 +37,21 @@
                 <tr style="height: 18px">
                   <td style="width: 50%; height: 18px">
                     <strong>Cliente:</strong>
-                    {{ data.pedido_venda_produto.cliente.razao_social }}
+                    {{ element.cliente.razao_social }}
                   </td>
                   <td style="width: 50%; height: 18px">
                     <strong>Nome Fantasia:</strong>
-                    {{ data.pedido_venda_produto.cliente.nome_fantasia }}
+                    {{ element.cliente.nome_fantasia }}
                   </td>
                 </tr>
                 <tr>
                   <td style="width: 50%">
                     <strong>CNPJ:</strong>
-                    {{ data.pedido_venda_produto.cliente.cnpj_cpf }}
+                    {{ element.cliente.cnpj_cpf }}
                   </td>
                   <td style="width: 50%">
                     <strong>Inscri&ccedil;&atilde;o Estadual:</strong>
-                    {{ data.pedido_venda_produto.cliente.inscricao_estadual }}
+                    {{ element.cliente.inscricao_estadual }}
                   </td>
                 </tr>
               </tbody>
@@ -69,9 +64,9 @@
                 <tr style="height: 18px">
                   <td style="width: 100%; height: 18px">
                     <strong>Endere&ccedil;o:</strong>
-                    {{ data.pedido_venda_produto.cliente.endereco }}
-                    {{ data.pedido_venda_produto.cliente.endereco_numero }}
-                    {{ data.pedido_venda_produto.cliente.complemento }}
+                    {{ element.cliente.endereco }}
+                    {{ element.cliente.endereco_numero }}
+                    {{ element.cliente.complemento }}
                   </td>
                 </tr>
               </tbody>
@@ -84,22 +79,22 @@
                 <tr style="height: 18px">
                   <td style="width: 50%; height: 18px">
                     <strong>Bairro:</strong>
-                    {{ data.pedido_venda_produto.cliente.bairro }}
+                    {{ element.cliente.bairro }}
                   </td>
                   <td style="width: 50%; height: 18px">
                     <strong>CEP:</strong>
-                    {{ data.pedido_venda_produto.cliente.cep }}
+                    {{ element.cliente.cep }}
                   </td>
                 </tr>
                 <tr>
-                  <td style="width: 50%"><strong>Cidade:</strong>{{ data.pedido_venda_produto.cliente.cidade }}</td>
-                  <td style="width: 50%"><strong>Estado:</strong>{{ data.pedido_venda_produto.cliente.estado }}</td>
+                  <td style="width: 50%"><strong>Cidade:</strong>{{ element.cliente.cidade }}</td>
+                  <td style="width: 50%"><strong>Estado:</strong>{{ element.cliente.estado }}</td>
                 </tr>
                 <tr>
                   <td style="width: 50%"><strong>Telefone:</strong>
-                    {{ data.pedido_venda_produto.cliente.telefone1_ddd }}
-                    {{ data.pedido_venda_produto.cliente.telefone1_numero }}</td>
-                  <td style="width: 50%"><strong>E-mail:</strong>{{ data.pedido_venda_produto.cliente.email }}</td>
+                    {{ element.cliente.telefone1_ddd }}
+                    {{ element.cliente.telefone1_numero }}</td>
+                  <td style="width: 50%"><strong>E-mail:</strong>{{ element.cliente.email }}</td>
                 </tr>
               </tbody>
             </table>
@@ -136,7 +131,7 @@
                     <strong>Subtotal</strong>
                   </td>
                 </tr>
-                <tr style="height: 18px"  *ngFor="let pedido of listaProdutos">
+                <tr style="height: 18px"  *ngFor="let pedido of element.det">
                   <td style="width: 33.0952%; height: 18px">{{ pedido.produto.codigo }} -
                     {{ pedido.produto.descricao }}</td>
                   <td style="width: 10.9525%; text-align: center; height: 18px">
@@ -170,7 +165,7 @@
                   <td style="width: 18.2857%; text-align: right"><strong
                     >R$
                     {{
-                      data.pedido_venda_produto.total_pedido.valor_total_pedido
+                      element.total_pedido.valor_total_pedido
                     }}</strong
                   ></td>
                 </tr>
@@ -181,7 +176,7 @@
                   <td style="width: 18.2857%; text-align: right"><strong
                     >R$
                     {{
-                      data.pedido_venda_produto.total_pedido.valor_aberto
+                      element.total_pedido.valor_aberto
                     }}</strong
                   ></td>
                 </tr>
@@ -192,7 +187,7 @@
                   <td style="width: 18.2857%; text-align: right"><strong
                     >R$
                     {{
-                      data.pedido_venda_produto.total_pedido.valor_total_cliente
+                      element.total_pedido.valor_total_cliente
                     }}</strong
                   ></td>
                 </tr>
@@ -213,15 +208,15 @@
                     Vista
                   </td>
                   <td style="width: 50%; height: 18px">
-                    <strong>Data de Emiss&atilde;o:</strong>{{ data.pedido_venda_produto.cabecalho.data_previsao }}
+                    <strong>Data de Emiss&atilde;o:</strong>{{ element.cabecalho.data_previsao }}
                   </td>
                 </tr>
                 <tr style="height: 18px">
                   <td style="width: 50%; height: 18px">
-                    <strong>data_entrega:&nbsp;</strong>{{ data.pedido_venda_produto.cabecalho.data_previsao }}
+                    <strong>data_entrega:&nbsp;</strong>{{ element.cabecalho.data_previsao }}
                   </td>
                   <td style="width: 50%; height: 18px">
-                    <strong>Fantasia:&nbsp;</strong>{{ data.pedido_venda_produto.cliente.nome_fantasia }}
+                    <strong>Fantasia:&nbsp;</strong>{{ element.cliente.nome_fantasia }}
                   </td>
                 </tr>
               </tbody>
@@ -233,7 +228,7 @@
               <tbody>
                 <tr style="height: 18px">
                   <td style="width: 100%; height: 18px">
-                    <strong>pedido_erp:&nbsp;</strong>{{ data.pedido_venda_produto.cabecalho.numero_pedido }}
+                    <strong>pedido_erp:&nbsp;</strong>{{ element.cabecalho.numero_pedido }}
                   </td>
                 </tr>
                 <tr style="height: 18px">
@@ -255,14 +250,14 @@
                 </tr>
                 <tr style="height: 18px">
                   <td style="width: 100%; height: 18px">
-                    <strong>Transportadora:</strong>{{ data.pedido_venda_produto.frete.codigo_transportadora }}
+                    <strong>Transportadora:</strong>{{ element.frete.codigo_transportadora }}
                   </td>
                 </tr>
                 <tr style="height: 18px">
                   <td style="width: 100%; height: 18px">
                     <strong>Informa&ccedil;&otilde;es Adicionais:</strong
                     ><br />{{
-                      data.pedido_venda_produto.cliente.nome_fantasia
+                      element.cliente.nome_fantasia
                     }}
                   </td>
                 </tr>
@@ -272,11 +267,5 @@
         </tr>
       </tbody>
     </table>
-    <p>&nbsp;</p>
   </div>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onCancel()">Cancelar</button>
-  <button mat-button [mat-dialog-close]="" cdkFocusInitial>Ok</button>
-  <button mat-button (click)="downloadAsPDF()">PDF</button>
 </div>

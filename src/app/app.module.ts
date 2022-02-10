@@ -17,6 +17,7 @@ import { ElementDialogComponent } from './shared/element-dialog/element-dialog.c
 import { FooterComponent } from './shared/footer/footer.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { HomeComponent } from './views/home/home.component';
+import { PDFGeneratorComponent } from './shared/pdfgenerator/pdfgenerator.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { HomeComponent } from './views/home/home.component';
     HomeComponent,
     HeaderComponent,
     FooterComponent,
-    ElementDialogComponent
+    ElementDialogComponent,
+    PDFGeneratorComponent
   ],
   imports: [
     BrowserModule,
