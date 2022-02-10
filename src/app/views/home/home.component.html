@@ -44,7 +44,7 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element">
-        <button mat-icon-button color="primary" (click)="buildPDF(element.position)">
+        <button mat-icon-button color="primary" (click)="downloadAsPDF(element)">
           <mat-icon>picture_as_pdf</mat-icon>
         </button>
         <button mat-icon-button color="primary" (click)="viewPDF(element.cabecalho.numero_pedido)">

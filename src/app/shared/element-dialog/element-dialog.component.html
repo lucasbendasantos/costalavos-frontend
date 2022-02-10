@@ -1,574 +1,282 @@
-<h1 mat-dialog-title>Pedido {{data.pedido_venda_produto.cabecalho.numero_pedido}} - {{data.pedido_venda_produto.cliente.nome_fantasia}}</h1>
+<h1 mat-dialog-title>
+  Pedido {{ data.pedido_venda_produto.cabecalho.numero_pedido }} -
+  {{ data.pedido_venda_produto.cliente.nome_fantasia }}
+</h1>
 
-
-
-<div mat-dialog-content>
-  <div class="conteudo_simplest_modal">
-    <div class="modal-conteudo" style="padding-bottom: 0">
-      <a class="botao pequeno padrao">Imprimir</a>
-      <a
-        class="botao pequeno padrao"
-        href="/337413/pedidos/66629563/pdf/"
-        target="_blank"
-        >Download PDF</a
-      >
-    </div>
-    <hr />
-    <div
-      id="conteudo_imprimir"
-      style="width: 840px; margin: 0 auto; padding-bottom: 20px"
+<div class="container">
+  <div mat-dialog-content id="pdfTable" #pdfTable>
+    <table
+      style="border-collapse: collapse; width: 100%; height: 156px"
+      border="1"
     >
-      <div class="pedido_html" >
-        <table
-          style="
-            border: 2px solid #000000;
-            text-align: center;
-            width: 100%;
-            border-collapse: collapse;
-            border-bottom: 0;
-          "
-
-        >
-          <tbody >
-            <tr>
-              <td style="width: 210px; padding: 3px">
-                <img
-                  src="https://simplest-meuspedidos-arquivos.s3.amazonaws.com/media/logomarca/337413/c1b81d96-52eb-11ec-991f-0242ac120003.png"
-                />
-              </td>
-              <td style="font-size: 12pt; text-align: center; padding: 3px">
-                <strong>Costa Lavos</strong> <br />Pedido N&ordm; {{data.pedido_venda_produto.cabecalho.numero_pedido}}
-              </td>
-              <td style="width: 210px; padding: 3px">&nbsp;</td>
-            </tr>
-          </tbody>
-        </table>
-        <table
-          style="
-            border: 2px solid #000000;
-            width: 100%;
-            border-collapse: collapse;
-            border-bottom: 0;
-          "
-        >
-          <tbody>
-            <tr>
-              <td style="padding: 3px" colspan="2">
-                <strong>Representada:</strong> Costa Lavos / Costa Lavos
-              </td>
-            </tr>
-            <tr>
-              <td style="width: 50%; padding: 3px" colspan="2">
-                <strong>CNPJ:</strong> 60.813.540/0004-69
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <table
-          style="
-            border: 2px solid #000000;
-            width: 100%;
-            border-collapse: collapse;
-            border-bottom: 0;
-          "
-        >
-          <tbody>
-            <tr>
-              <td style="width: 50%; padding: 3px">
-                <strong>Cliente:</strong> {{data.pedido_venda_produto.cliente.razao_social}}
-              </td>
-              <td style="width: 50%; padding: 3px">
-                <strong>Nome Fantasia:</strong> {{data.pedido_venda_produto.cliente.nome_fantasia}}
-              </td>
-            </tr>
-            <tr>
-              <td style="width: 50%; padding: 3px">
-                <strong>CNPJ:</strong> {{data.pedido_venda_produto.cliente.cnpj_cpf}}
-              </td>
-              <td style="width: 50%; padding: 3px">
-                <strong>Inscri&ccedil;&atilde;o Estadual:</strong> {{data.pedido_venda_produto.cliente.inscricao_estadual}}
-              </td>
-            </tr>
-            <tr>
-              <td style="padding: 3px" colspan="2">
-                <strong>Endere&ccedil;o:</strong> {{data.pedido_venda_produto.cliente.endereco}} {{data.pedido_venda_produto.cliente.endereco_numero}} {{data.pedido_venda_produto.cliente.complemento}}
-              </td>
-            </tr>
-            <tr>
-              <td style="width: 50%; padding: 3px">
-                <strong>Bairro:</strong> {{data.pedido_venda_produto.cliente.bairro}}
-              </td>
-              <td style="width: 50%; padding: 3px">
-                <strong>CEP:</strong> {{data.pedido_venda_produto.cliente.cep}}
-              </td>
-            </tr>
-            <tr>
-              <td style="width: 50%; padding: 3px">
-                <strong>Cidade:</strong> {{data.pedido_venda_produto.cliente.cidade}}
-              </td>
-              <td style="width: 50%; padding: 3px">
-                <strong>Estado:</strong> {{data.pedido_venda_produto.cliente.estado}}
-              </td>
-            </tr>
-            <tr>
-              <td style="width: 50%; padding: 3px">
-                <strong>Telefone:</strong> {{data.pedido_venda_produto.cliente.telefone1_ddd}} {{data.pedido_venda_produto.cliente.telefone1_numero}}
-              </td>
-              <td style="width: 50%; padding: 3px">
-                <strong>E-mail:</strong> {{data.pedido_venda_produto.cliente.email}}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <table
-          style="
-            border: 2px solid #000;
-            border-collapse: collapse;
-            page-break-after: auto;
-            width: 100%;
-            border-bottom: 0;
-          "
-          width="100%"
-        >
-          <tbody >
-            <tr>
-              <td style="border: 1px solid #888; padding: 3px; font-size: 13px">
-                <strong>Produto</strong>
-              </td>
-              <td
-                style="
-                  text-align: center;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  width: 65px;
-                "
-                align="center"
-                width="65"
-              >
-                <strong>Qtde.</strong>
-              </td>
-              <td
-                style="
-                  text-align: right;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  width: 100px;
-                "
-                align="right"
-                width="100"
-              >
-                <strong>Pre&ccedil;o Tabela</strong>
-              </td>
-              <td
-                style="
-                  text-align: center;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  width: 100px;
-                "
-                align="center"
-                width="100"
-              >
-                <strong>Desc.</strong>
-              </td>
-              <td
-                style="
-                  text-align: right;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  width: 118px;
-                "
-                align="right"
-                width="118"
-              >
-                <strong>Pre&ccedil;o L&iacute;quido</strong>
-              </td>
-              <td
-                style="
-                  text-align: right;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  width: 100px;
-                "
-                align="right"
-                width="100"
-              >
-                <strong>Subtotal</strong>
-              </td>
-            </tr>
-
-            <tr
-              style="
-                border-collapse: collapse;
-                border-left: 2px solid #000;
-                border-right: 2px solid #000;
-                padding: 5px;
-                page-break-inside: avoid;
-                width: 100%;
-                border-bottom: 0;
-              "
-              *ngFor="let pedido of listaProdutos"
+      <tbody>
+        <tr style="height: 18px">
+          <td style="width: 100%; height: 18px">
+            <table style="border-collapse: collapse; width: 100%" border="1">
+              <tbody>
+                <tr>
+                  <td style="width: 19.4286%">
+                    <img
+                      src="data:image/png;base64,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"
+                      alt="https://simplest-meuspedidos-arquivos.s3.amazonaws.com/media/logomarca/337413/c1b81d96-52eb-11ec-991f-0242ac120003.png"
+                      width="200"
+                      height="155"
+                    />
+                  </td>
+                  <td style="width: 80.5714%">
+                    <h1 style="text-align: center">Costa Lavos</h1>
+                    <h3 style="text-align: center">Pedido N&ordm; {{ data.pedido_venda_produto.cabecalho.numero_pedido }}</h3>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr style="height: 92px">
+          <td style="width: 100%; height: 92px">
+            <table
+              style="border-collapse: collapse; width: 100%; height: 18px"
+              border="1"
             >
-              <td
-                style="
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                "
-              >
-                <table>
-                  <tbody>
-                    <tr>
-                      <td style="font-size: 13px">
-
-                        {{pedido.produto.codigo}} - {{pedido.produto.descricao}}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </td>
-              <td
-                style="
-                  text-align: center;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                  width: 65px;
-                "
-                align="center"
-                width="65"
-              >
-              {{pedido.produto.quantidade}} {{pedido.produto.unidade}}
-              </td>
-              <td
-                style="
-                  text-align: right;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                  width: 100px;
-                "
-                align="right"
-                width="100"
-              >
-              R$ {{pedido.produto.valor_unitario}}
-              </td>
-              <td
-                style="
-                  text-align: center;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                  width: 100px;
-                "
-                align="center"
-                width="100"
-              >
-                -----
-              </td>
-              <td
-                style="
-                  text-align: right;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                  width: 118px;
-                "
-                align="right"
-                width="118"
-              >
-              R$ {{pedido.produto.valor_unitario}}
-              </td>
-              <td
-                style="
-                  text-align: right;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  font-size: 13px;
-                  border-bottom: 0;
-                  width: 100px;
-                "
-                align="right"
-                width="100"
-              >
-              R$ {{pedido.produto.valor_total}}
-              </td>
-            </tr>
-
-
-
-
-
-
-          </tbody>
-        </table>
-        <table
-          style="
-            border-collapse: collapse;
-            border-left: 2px solid #000;
-            border-right: 2px solid #000;
-            padding: 5px;
-            page-break-inside: avoid;
-            width: 100%;
-            border-bottom: 0;
-          "
-          width="100%"
-        >
-          <tbody>
-            <tr
-              style="
-                border: 2px solid #000;
-                border-bottom: 0;
-                border-collapse: collapse;
-                border-top: 0;
-                page-break-after: auto;
-                width: 100%;
-              "
+              <tbody>
+                <tr style="height: 18px">
+                  <td style="width: 50%; height: 18px">
+                    <strong>Cliente:</strong>
+                    {{ data.pedido_venda_produto.cliente.razao_social }}
+                  </td>
+                  <td style="width: 50%; height: 18px">
+                    <strong>Nome Fantasia:</strong>
+                    {{ data.pedido_venda_produto.cliente.nome_fantasia }}
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 50%">
+                    <strong>CNPJ:</strong>
+                    {{ data.pedido_venda_produto.cliente.cnpj_cpf }}
+                  </td>
+                  <td style="width: 50%">
+                    <strong>Inscri&ccedil;&atilde;o Estadual:</strong>
+                    {{ data.pedido_venda_produto.cliente.inscricao_estadual }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table
+              style="border-collapse: collapse; width: 100%; height: 18px"
+              border="1"
             >
-              <td
-                style="text-align: right; border: 1px solid #888; padding: 3px"
-                align="right"
-              >
-                <strong>Valor Pedido:</strong>
-              </td>
-              <td
-                style="
-                  text-align: right;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  width: 140px;
-                "
-                align="right"
-                width="140"
-              >
-                <strong>R$ {{data.pedido_venda_produto.total_pedido.valor_total_pedido}}</strong>
-              </td>
-            </tr>
-            <tr
-              style="
-                border: 2px solid #000;
-                border-bottom: 0;
-                border-collapse: collapse;
-                border-top: 0;
-                page-break-after: auto;
-                width: 100%;
-              "
+              <tbody>
+                <tr style="height: 18px">
+                  <td style="width: 100%; height: 18px">
+                    <strong>Endere&ccedil;o:</strong>
+                    {{ data.pedido_venda_produto.cliente.endereco }}
+                    {{ data.pedido_venda_produto.cliente.endereco_numero }}
+                    {{ data.pedido_venda_produto.cliente.complemento }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table
+              style="border-collapse: collapse; width: 100%; height: 18px"
+              border="1"
             >
-              <td
-                style="text-align: right; border: 1px solid #888; padding: 3px"
-                align="right"
-              >
-                <strong>Saldo Anterior:</strong>
-              </td>
-              <td
-                style="
-                  text-align: right;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  width: 140px;
-                "
-                align="right"
-                width="140"
-              >
-                <strong>R$ {{data.pedido_venda_produto.total_pedido.valor_aberto}}</strong>
-              </td>
-            </tr>
-            <tr
-              style="
-                border: 2px solid #000;
-                border-bottom: 0;
-                border-collapse: collapse;
-                border-top: 0;
-                page-break-after: auto;
-                width: 100%;
-              "
+              <tbody>
+                <tr style="height: 18px">
+                  <td style="width: 50%; height: 18px">
+                    <strong>Bairro:</strong>
+                    {{ data.pedido_venda_produto.cliente.bairro }}
+                  </td>
+                  <td style="width: 50%; height: 18px">
+                    <strong>CEP:</strong>
+                    {{ data.pedido_venda_produto.cliente.cep }}
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 50%"><strong>Cidade:</strong>{{ data.pedido_venda_produto.cliente.cidade }}</td>
+                  <td style="width: 50%"><strong>Estado:</strong>{{ data.pedido_venda_produto.cliente.estado }}</td>
+                </tr>
+                <tr>
+                  <td style="width: 50%"><strong>Telefone:</strong>
+                    {{ data.pedido_venda_produto.cliente.telefone1_ddd }}
+                    {{ data.pedido_venda_produto.cliente.telefone1_numero }}</td>
+                  <td style="width: 50%"><strong>E-mail:</strong>{{ data.pedido_venda_produto.cliente.email }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr style="height: 18px">
+          <td style="width: 100%; height: 18px">
+            <table
+              style="border-collapse: collapse; width: 100%; height: 36px"
+              border="1"
             >
-              <td
-                style="text-align: right; border: 1px solid #888; padding: 3px"
-                align="right"
-              >
-                <strong>Valor Total:</strong>
-              </td>
-              <td
-                style="
-                  text-align: right;
-                  border: 1px solid #888;
-                  padding: 3px;
-                  width: 140px;
-                "
-                align="right"
-                width="140"
-              >
-                <strong>R$ {{data.pedido_venda_produto.total_pedido.valor_total_cliente}}</strong>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <table
-          style="
-            border: 2px solid #000000;
-            border-bottom: 0;
-            width: 100%;
-            border-collapse: collapse;
-          "
-        >
-          <tbody>
-            <tr>
-              <td style="padding: 3px; width: 70%">
-                <strong>Condi&ccedil;&atilde;o de Pagamento:</strong> A Vista
-              </td>
-              <td style="padding: 3px; width: 30%">
-                <strong>Data de Emiss&atilde;o:</strong> {{data.pedido_venda_produto.cabecalho.data_previsao}}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <table
-          style="
-            border: 2px solid #000000;
-            border-bottom: 0;
-            width: 100%;
-            border-collapse: collapse;
-          "
-        >
-          <tbody>
-            <tr>
-              <td style="padding: 3px">
-                <strong>data_entrega: </strong> {{data.pedido_venda_produto.cabecalho.data_previsao}}
-              </td>
-              <td style="padding: 3px; width: 30%">
-                <strong>Fantasia: </strong>{{data.pedido_venda_produto.cliente.nome_fantasia}}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <table
-          style="
-            border: 2px solid #000000;
-            border-bottom: 0;
-            width: 100%;
-            border-collapse: collapse;
-          "
-        >
-          <tbody>
-            <tr>
-              <td style="padding: 3px"><strong>pedido_erp: </strong> {{data.pedido_venda_produto.cabecalho.numero_pedido}}</td>
-            </tr>
-          </tbody>
-        </table>
-        <table
-          style="
-            border: 2px solid #000000;
-            border-bottom: 0;
-            width: 100%;
-            border-collapse: collapse;
-          "
-        >
-          <tbody>
-            <tr>
-              <td style="padding: 3px">
-                <strong>tipo_faturamento: </strong> Op&ccedil;&atilde;o 1
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <table
-          style="
-            border: 2px solid #000000;
-            border-bottom: 0;
-            width: 100%;
-            border-collapse: collapse;
-          "
-        >
-          <tbody>
-            <tr>
-              <td style="padding: 3px">
-                <strong>tipo_frete: </strong> 0 - Frete por conta do emitente.
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <table
-          style="
-            border: 2px solid #000000;
-            border-bottom: 0;
-            width: 100%;
-            border-collapse: collapse;
-          "
-        >
-          <tbody>
-            <tr>
-              <td style="padding: 3px">
-                <strong>Tipo de pedido:</strong> Venda
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <table
-          style="
-            border: 2px solid #000000;
-            width: 100%;
-            border-collapse: collapse;
-            border-bottom: 0;
-          "
-        >
-          <tbody>
-            <tr>
-              <td style="padding: 3px">
-                <strong>Transportadora:</strong> {{data.pedido_venda_produto.frete.codigo_transportadora}}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <table
-          style="
-            border: 2px solid #000000;
-            width: 100%;
-            border-collapse: collapse;
-            border-bottom: 0;
-          "
-        >
-          <tbody>
-            <tr>
-              <td style="padding: 3px; word-break: break-word">
-                <strong>Informa&ccedil;&otilde;es Adicionais:</strong
-                ><br />{{data.pedido_venda_produto.cliente.nome_fantasia}}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <table
-          style="
-            border: 2px solid #000000;
-            width: 100%;
-            border-collapse: collapse;
-          "
-        >
-          <tbody>
-            <tr>
-              <td
-                style="padding: 3px; text-align: center; word-break: break-word"
-              >
-                &nbsp;
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+              <tbody>
+                <tr style="height: 18px">
+                  <td style="width: 33.0952%; height: 18px">
+                    <strong>Produto</strong>
+                  </td>
+                  <td style="width: 10.9525%; text-align: center; height: 18px">
+                    <strong>Qtde.</strong>
+                  </td>
+                  <td style="width: 15.0953%; text-align: right; height: 18px">
+                    <strong>Pre&ccedil;o Tabela</strong>
+                  </td>
+                  <td style="width: 12.381%; text-align: center; height: 18px">
+                    <strong>Desc.</strong>
+                  </td>
+                  <td
+                    style="width: 16.4285%; text-align: right; height: 18px"
+                    align="right"
+                    width="118"
+                  >
+                    <strong>Pre&ccedil;o L&iacute;quido</strong>
+                  </td>
+                  <td style="width: 11.9524%; text-align: right; height: 18px">
+                    <strong>Subtotal</strong>
+                  </td>
+                </tr>
+                <tr style="height: 18px"  *ngFor="let pedido of listaProdutos">
+                  <td style="width: 33.0952%; height: 18px">{{ pedido.produto.codigo }} -
+                    {{ pedido.produto.descricao }}</td>
+                  <td style="width: 10.9525%; text-align: center; height: 18px">
+                    {{ pedido.produto.quantidade }} {{ pedido.produto.unidade }}
+                  </td>
+                  <td style="width: 15.0953%; text-align: right; height: 18px">
+                    R$ {{ pedido.produto.valor_unitario }}
+                  </td>
+                  <td style="width: 12.381%; text-align: center; height: 18px">
+                    <strong>--</strong>
+                  </td>
+                  <td style="width: 16.4285%; text-align: right; height: 18px">
+                    R$ {{ pedido.produto.valor_unitario }}
+                  </td>
+                  <td style="width: 11.9524%; text-align: right; height: 18px">
+                    R$ {{ pedido.produto.valor_total }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr style="height: 18px">
+          <td style="width: 100%; height: 18px">
+            <table style="border-collapse: collapse; width: 100%" border="1">
+              <tbody>
+                <tr>
+                  <td style="width: 81.7143%; text-align: right">
+                    <strong>Valor Pedido: </strong>
+                  </td>
+                  <td style="width: 18.2857%; text-align: right"><strong
+                    >R$
+                    {{
+                      data.pedido_venda_produto.total_pedido.valor_total_pedido
+                    }}</strong
+                  ></td>
+                </tr>
+                <tr>
+                  <td style="width: 81.7143%" align="right">
+                    <strong>Saldo Anterior:</strong>
+                  </td>
+                  <td style="width: 18.2857%; text-align: right"><strong
+                    >R$
+                    {{
+                      data.pedido_venda_produto.total_pedido.valor_aberto
+                    }}</strong
+                  ></td>
+                </tr>
+                <tr>
+                  <td style="width: 81.7143%; text-align: right">
+                    <strong>Valor Total:</strong>
+                  </td>
+                  <td style="width: 18.2857%; text-align: right"><strong
+                    >R$
+                    {{
+                      data.pedido_venda_produto.total_pedido.valor_total_cliente
+                    }}</strong
+                  ></td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr style="height: 18px">
+          <td style="width: 100%; height: 10px">
+            <table
+              style="border-collapse: collapse; width: 100%; height: 36px"
+              border="1"
+            >
+              <tbody>
+                <tr style="height: 18px">
+                  <td style="width: 50%; height: 18px">
+                    <strong>Condi&ccedil;&atilde;o de Pagamento:</strong>&nbsp;A
+                    Vista
+                  </td>
+                  <td style="width: 50%; height: 18px">
+                    <strong>Data de Emiss&atilde;o:</strong>{{ data.pedido_venda_produto.cabecalho.data_previsao }}
+                  </td>
+                </tr>
+                <tr style="height: 18px">
+                  <td style="width: 50%; height: 18px">
+                    <strong>data_entrega:&nbsp;</strong>{{ data.pedido_venda_produto.cabecalho.data_previsao }}
+                  </td>
+                  <td style="width: 50%; height: 18px">
+                    <strong>Fantasia:&nbsp;</strong>{{ data.pedido_venda_produto.cliente.nome_fantasia }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table
+              style="border-collapse: collapse; width: 97.5714%; height: 108px"
+              border="1"
+            >
+              <tbody>
+                <tr style="height: 18px">
+                  <td style="width: 100%; height: 18px">
+                    <strong>pedido_erp:&nbsp;</strong>{{ data.pedido_venda_produto.cabecalho.numero_pedido }}
+                  </td>
+                </tr>
+                <tr style="height: 18px">
+                  <td style="width: 100%; height: 18px">
+                    <strong>tipo_faturamento:&nbsp;</strong>Op&ccedil;&atilde;o
+                    1
+                  </td>
+                </tr>
+                <tr style="height: 18px">
+                  <td style="width: 100%; height: 18px">
+                    <strong>tipo_frete:&nbsp;</strong>0 - Frete por conta do
+                    emitente.
+                  </td>
+                </tr>
+                <tr style="height: 18px">
+                  <td style="width: 100%; height: 18px">
+                    <strong>Tipo de pedido:</strong>&nbsp;Venda
+                  </td>
+                </tr>
+                <tr style="height: 18px">
+                  <td style="width: 100%; height: 18px">
+                    <strong>Transportadora:</strong>{{ data.pedido_venda_produto.frete.codigo_transportadora }}
+                  </td>
+                </tr>
+                <tr style="height: 18px">
+                  <td style="width: 100%; height: 18px">
+                    <strong>Informa&ccedil;&otilde;es Adicionais:</strong
+                    ><br />{{
+                      data.pedido_venda_produto.cliente.nome_fantasia
+                    }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>&nbsp;</p>
   </div>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onCancel()">Cancelar</button>
   <button mat-button [mat-dialog-close]="" cdkFocusInitial>Ok</button>
+  <button mat-button (click)="downloadAsPDF()">PDF</button>
 </div>
