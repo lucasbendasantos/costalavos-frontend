@@ -13,6 +13,7 @@ declare var require: any;
 
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
+import { PDFGeneratorComponent } from 'src/app/shared/pdfgenerator/pdfgenerator.component';
 const htmlToPdfmake = require("html-to-pdfmake");
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
@@ -29,6 +30,11 @@ export class HomeComponent implements OnInit {
   displayedColumns: string[] = ['pedido', 'data', 'cliente', 'endereco', 'itens', 'total', 'actions'];
   dataSource!: any[];
   element: any = {};
+  firstElement: any = {}
+
+
+  pdfGenerator!: PDFGeneratorComponent;
+
 
   constructor(
     public dialog: MatDialog,
@@ -38,7 +44,7 @@ export class HomeComponent implements OnInit {
         this.pedidoService.listAll()
           .subscribe((data: PedidoVendaProdutoList) => {
             this.dataSource = data.pedido_venda_produto;
-
+            this.firstElement = data.pedido_venda_produto[0];
           })
 
     }
@@ -101,12 +107,27 @@ export class HomeComponent implements OnInit {
   }
 
 
-  public downloadAsPDF(element: any) {
 
-    console.log(element);
-    var html = htmlToPdfmake('pdfTeste');
-    const documentDefinition = { content: html };
-    pdfMake.createPdf(documentDefinition).download();
+
+  public  async downloadAsPDF(element: PedidoVendaProduto) {
+    this.firstElement = element;
+
+    console.log("DELAY 15 Segundos")
+    await this.delay(1500);
+
+    this.pdfGenerator = new PDFGeneratorComponent();
+    this.pdfGenerator.buildPDF(this.firstElement);
   }
+
+
+
+private delay(ms: number): Promise<boolean> {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(true);
+    }, ms);
+  });
+}
+
 
 }
