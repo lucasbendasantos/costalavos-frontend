@@ -1,4 +1,3 @@
-import { Cabecalho } from './../../model/cabecalho';
 import { PedidoVendaProduto } from './../../model/pedido-venda-produto';
 import { PedidoVendaProdutoList } from '../../model/pedido-venda-produto-list';
 import { PedidoService } from './../../service/pedido.service';
@@ -7,7 +6,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { ElementDialogComponent } from './../../shared/element-dialog/element-dialog.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTable } from '@angular/material/table';
-import { delay } from 'rxjs';
 
 declare var require: any;
 
@@ -40,7 +38,6 @@ export class HomeComponent implements OnInit {
     public dialog: MatDialog,
     public pedidoService: PedidoService
     ) {
-
         this.pedidoService.listAll()
           .subscribe((data: PedidoVendaProdutoList) => {
             this.dataSource = data.pedido_venda_produto;
@@ -70,10 +67,6 @@ export class HomeComponent implements OnInit {
         this.table.renderRows();
       }
     });
-  }
-
-  buildPDF(position: number): void{
-
   }
 
   viewPDF(numeroPedido: number): void{
