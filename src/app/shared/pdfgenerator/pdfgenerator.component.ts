@@ -36,7 +36,7 @@ export class PDFGeneratorComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public buildPDF(element: PedidoVendaProduto) {
+  public buildPDF(element: any) {
 
     this.mostrar = true
     this.element = element;
@@ -51,7 +51,8 @@ export class PDFGeneratorComponent implements OnInit {
     var html = htmlToPdfmake(document.getElementById('tabela')!.innerHTML);
     this.reload();
     const documentDefinition = { content: html };
-    pdfMake.createPdf(documentDefinition).download();
+    var numeroPedido = parseInt(element.cabecalho.numero_pedido)
+    pdfMake.createPdf(documentDefinition).download(`${numeroPedido}`);
 
 
   }

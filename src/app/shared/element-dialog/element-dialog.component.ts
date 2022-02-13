@@ -52,7 +52,7 @@ export class ElementDialogComponent implements OnInit {
     const pdfTable = this.pdfTable.nativeElement;
     var html = htmlToPdfmake(pdfTable.innerHTML);
     const documentDefinition = { content: html };
-    pdfMake.createPdf(documentDefinition).download();
+    pdfMake.createPdf(documentDefinition).download(`${this.data.pedido_venda_produto.cabecalho.numero_pedido}`);
 
   }
 
