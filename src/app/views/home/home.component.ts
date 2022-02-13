@@ -12,6 +12,7 @@ declare var require: any;
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import { PDFGeneratorComponent } from 'src/app/shared/pdfgenerator/pdfgenerator.component';
+import { PageEvent } from '@angular/material/paginator';
 const htmlToPdfmake = require("html-to-pdfmake");
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
@@ -30,6 +31,14 @@ export class HomeComponent implements OnInit {
   element: any = {};
   firstElement: any = {}
 
+  length = 100;
+  pageSize = 10;
+  paginacao: any = {pagina: 0, registros: this.pageSize};
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+  pageEvent!: PageEvent;
+
+  mostrar = false;
+
 
   pdfGenerator!: PDFGeneratorComponent;
 
@@ -38,10 +47,16 @@ export class HomeComponent implements OnInit {
     public dialog: MatDialog,
     public pedidoService: PedidoService
     ) {
-        this.pedidoService.listAll()
+
+        this.pedidoService.listAllPage(this.paginacao.pagina, this.paginacao.registros)
           .subscribe((data: PedidoVendaProdutoList) => {
             this.dataSource = data.pedido_venda_produto;
             this.firstElement = data.pedido_venda_produto[0];
+            this.paginacao = {pagina: data.pagina -1, registros: data.registros, total_de_paginas: data.total_de_paginas, total_de_registros: data.total_de_registros}
+            console.log(this.paginacao)
+            this.length = this.paginacao.total_de_registros
+            this.pageSize = this.paginacao.registros
+            this.mostrar = true
           })
 
     }
@@ -122,5 +137,32 @@ private delay(ms: number): Promise<boolean> {
   });
 }
 
+setPageSizeOptions(setPageSizeOptionsInput: string) {
+  if (setPageSizeOptionsInput) {
+    this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
+  }
+}
+
+pageNavigations(event : PageEvent){
+  this.mostrar = false;
+  console.log(event);
+
+  this.paginacao.pagina = event.pageIndex +1;
+  this.pedidoService.listAllPage(this.paginacao.pagina, this.paginacao.registros)
+          .subscribe((data: PedidoVendaProdutoList) => {
+            this.dataSource = data.pedido_venda_produto;
+            this.firstElement = data.pedido_venda_produto[0];
+
+
+            this.paginacao = {pagina: data.pagina -1, registros: data.registros, total_de_paginas: data.total_de_paginas, total_de_registros: data.total_de_registros}
+            console.log(this.paginacao)
+
+            this.length = this.paginacao.total_de_registros
+            this.pageSize = this.paginacao.registros
+            this.mostrar = true
+          })
+
+
+}
 
 }
