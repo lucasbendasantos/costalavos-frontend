@@ -1,3 +1,4 @@
+import { Cabecalho } from './../../model/cabecalho';
 import { PedidoVendaProduto } from './../../model/pedido-venda-produto';
 import { PedidoVendaProdutoList } from '../../model/pedido-venda-produto-list';
 import { PedidoService } from './../../service/pedido.service';
@@ -26,6 +27,7 @@ export class HomeComponent implements OnInit {
   @ViewChild(MatTable)
   table!: MatTable<any>;
   displayedColumns: string[] = [
+    'checkbox',
     'pedido',
     'data',
     'cliente',
@@ -39,7 +41,7 @@ export class HomeComponent implements OnInit {
   firstElement: any = {};
 
   length = 100;
-  pageSize = 10;
+  pageSize = 5;
   paginacao: any = { pagina: 0, registros: this.pageSize };
   pageSizeOptions: number[] = [5, 10, 15, 20];
   pageEvent!: PageEvent;
@@ -53,6 +55,10 @@ export class HomeComponent implements OnInit {
   nomeFantasiaCliente: string = '';
   numeroPedidoErroState = false;
   numeroPedidoErroMsg!: string;
+
+  allComplete: boolean = false;
+
+  listaParaDownload: any[] = [];
 
   constructor(public dialog: MatDialog, public pedidoService: PedidoService) {
     this.pedidoService
@@ -214,7 +220,35 @@ export class HomeComponent implements OnInit {
         this.pageSize = this.paginacao.registros;
         this.mostrar = true;
       });
-
-
   }
+
+  montaListaParaDownload(elemento: any){
+    console.log(this.listaParaDownload)
+    if(this.listaParaDownload.length !== 0){
+
+    for(var i = 0; i < this.listaParaDownload.length; i++){
+
+      var elementoNalista = this.listaParaDownload[i];
+
+      if(elemento.cabecalho.numero_pedido === elementoNalista.cabecalho.numero_pedido){
+        this.listaParaDownload.splice(i, 1);
+        console.log(this.listaParaDownload)
+        return;
+      }
+    }
+  }
+
+    this.listaParaDownload.push(elemento);
+    console.log(this.listaParaDownload)
+  }
+
+  public async  downloadAllPDFs(){
+    for(var i = 0; i < this.listaParaDownload.length; i++){
+      await this.delay(1000)
+      this.downloadAsPDF(this.listaParaDownload[i])
+      await this.delay(1000)
+    }
+  }
+
+
 }
