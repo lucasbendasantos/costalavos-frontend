@@ -1,3 +1,5 @@
+import { InformacoesAdicionais } from './informacoes-adicionais';
+import { InformacoesCadastro } from './informacoes-cadastro';
 import { Cabecalho } from './cabecalho';
 import { Cliente } from './cliente';
 import { Det } from './det';
@@ -11,5 +13,7 @@ export interface Pedido {
   det: Det,
   frete: Frete,
   cliente: Cliente
+  infoCadastro: InformacoesCadastro;
+  informacoes_adicionais: InformacoesAdicionais;
 
 }
