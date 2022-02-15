@@ -1,0 +1,44 @@
+table {
+  width: 100%;
+}
+
+.container{
+  padding: 50px 80px ;
+}
+
+
+.loading-spinner{
+  padding: 25px;
+  background: rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tamanhoIMG{
+  max-width: 50%;
+  max-height: 50%;
+}
+
+
+.example-headers-align .mat-expansion-panel-header-title,
+.example-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.example-headers-align .mat-form-field + .mat-form-field {
+  margin-left: 8px;
+}
+
+.ajusteBtnSearch{
+  padding: 10px;
+}
+
+.example-full-width {
+  width: 30%;
+}
