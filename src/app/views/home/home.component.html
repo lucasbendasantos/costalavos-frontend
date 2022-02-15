@@ -1,4 +1,43 @@
+
+
 <div class="container">
+    <mat-accordion class="example-headers-align">
+      <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Filtros
+          </mat-panel-title>
+          <mat-panel-description>
+            Clique para expandir filtros
+            <mat-icon color="primary">filter_list</mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Nº Pedido DE</mat-label>
+          <input matInput [(ngModel)]="numeroPedidoDe">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Nº Pedido ATE</mat-label>
+          <input matInput [(ngModel)]="numeroPedidoAte">
+          <mat-hint color> {{numeroPedidoErroMsg}}</mat-hint>
+          <mat-error *ngIf="numeroPedidoErroState">
+             {{numeroPedidoErroMsg}}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="example-full-width">
+          <mat-label>Nome Fantasia Cliente </mat-label>
+          <input matInput [(ngModel)]="nomeFantasiaCliente">
+        </mat-form-field>
+        <span class="ajusteBtnSearch">
+          <button mat-flat-button color="primary" aria-label="buscar" (click)="filterList()">
+              <mat-icon>search</mat-icon>
+          </button>
+        </span>
+      </mat-expansion-panel>
+    </mat-accordion>
   <div *ngIf="mostrar; else loading">
     <table mat-table #table [dataSource]="dataSource" class="mat-elevation-z8">
       <!--- Note that these columns can be defined in any order.
@@ -16,7 +55,7 @@
       <ng-container matColumnDef="data">
         <th mat-header-cell *matHeaderCellDef>Data</th>
         <td mat-cell *matCellDef="let element">
-          {{ element.cabecalho.data_previsao }}
+          {{ element.infoCadastro.dInc }}
         </td>
       </ng-container>
 

@@ -22,9 +22,9 @@ export class PedidoService {
     return this.http.get<PedidoVendaProduto>(`${this.apiUrl}?numero_pedido=${numeroPedido}`);
   }
 
-  listAllPage(pagina: number, registros_por_pagina: number): Observable<PedidoVendaProdutoList>{
+  listAllPage(pagina: number, registros_por_pagina: number, numeroPedidoDe: string, numeroPedidoAte: string, nomeFantasia: string): Observable<PedidoVendaProdutoList>{
 
-    var body = {"pagina":pagina,"registros_por_pagina":registros_por_pagina,"apenas_importado_api":"N"}
+    var body = {"pagina":pagina,"registros_por_pagina":registros_por_pagina,"apenas_importado_api":"N", "numero_pedido_de": numeroPedidoDe, "numero_pedido_ate": numeroPedidoAte, "nome_fantasia": nomeFantasia }
     console.log(body)
     return this.http.post<PedidoVendaProdutoList>(this.apiUrl, body);
   }
