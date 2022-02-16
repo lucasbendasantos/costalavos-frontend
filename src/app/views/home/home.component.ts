@@ -201,7 +201,7 @@ export class HomeComponent implements OnInit {
 
     this.mostrar = false;
     this.pedidoService
-      .listAllPage(this.paginacao.pagina, 10, this.numeroPedidoDe, this.numeroPedidoAte, this.nomeFantasiaCliente)
+      .listAllPage(this.paginacao.pagina, this.paginacao.registros, this.numeroPedidoDe, this.numeroPedidoAte, this.nomeFantasiaCliente)
       .subscribe((data: PedidoVendaProdutoList) => {
         this.dataSource = data.pedido_venda_produto;
         this.firstElement = data.pedido_venda_produto[0];
