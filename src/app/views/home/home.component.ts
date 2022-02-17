@@ -1,27 +1,47 @@
-import { Cabecalho } from './../../model/cabecalho';
-import { PedidoVendaProduto } from './../../model/pedido-venda-produto';
-import { PedidoVendaProdutoList } from '../../model/pedido-venda-produto-list';
-import { PedidoService } from './../../service/pedido.service';
-import { Pedido } from './../../model/pedido';
-import { MatDialog } from '@angular/material/dialog';
-import { ElementDialogComponent } from './../../shared/element-dialog/element-dialog.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatDialog } from '@angular/material/dialog';
+import { PageEvent } from '@angular/material/paginator';
 import { MatTable } from '@angular/material/table';
+import * as moment from 'moment';
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { PDFGeneratorComponent } from 'src/app/shared/pdfgenerator/pdfgenerator.component';
+
+import { PedidoVendaProdutoList } from '../../model/pedido-venda-produto-list';
+import { Pedido } from './../../model/pedido';
+import { PedidoVendaProduto } from './../../model/pedido-venda-produto';
+import { PedidoService } from './../../service/pedido.service';
+import { ElementDialogComponent } from './../../shared/element-dialog/element-dialog.component';
 
 declare var require: any;
 
-import * as pdfMake from "pdfmake/build/pdfmake";
-import * as pdfFonts from "pdfmake/build/vfs_fonts";
-import { PDFGeneratorComponent } from 'src/app/shared/pdfgenerator/pdfgenerator.component';
-import { PageEvent } from '@angular/material/paginator';
 const htmlToPdfmake = require("html-to-pdfmake");
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
+
+
+export const MY_FORMATS = {
+  parse: {
+      dateInput: 'LL'
+  },
+  display: {
+      dateInput: 'DD-MM-YYYY',
+      monthYearLabel: 'YYYY',
+      dateA11yLabel: 'LL',
+      monthYearA11yLabel: 'YYYY'
+  }
+};
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  providers: [PedidoService],
+  providers: [PedidoService,
+    {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'},
+  { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+  { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }],
 })
 export class HomeComponent implements OnInit {
   @ViewChild(MatTable)
@@ -55,14 +75,18 @@ export class HomeComponent implements OnInit {
   nomeFantasiaCliente: string = '';
   numeroPedidoErroState = false;
   numeroPedidoErroMsg!: string;
+  dataDe: any = '';
+  dataAte: any ='';
 
   allComplete: boolean = false;
 
   listaParaDownload: any[] = [];
 
+ daterange!: FormGroup
+
   constructor(public dialog: MatDialog, public pedidoService: PedidoService) {
     this.pedidoService
-      .listAllPage(this.paginacao.pagina, this.paginacao.registros, '', '', '')
+      .listAllPage(this.paginacao.pagina, this.paginacao.registros, this.numeroPedidoDe, this.numeroPedidoAte, this.nomeFantasiaCliente, this.dataDe, this.dataAte)
       .subscribe((data: PedidoVendaProdutoList) => {
         this.dataSource = data.pedido_venda_produto;
         this.firstElement = data.pedido_venda_produto[0];
@@ -79,7 +103,12 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.daterange =  new FormGroup({
+      start: new FormControl(),
+      end: new FormControl()
+   })
+  }
 
   openDialog(element: Pedido | null): void {
     const dialogRef = this.dialog.open(ElementDialogComponent, {
@@ -171,7 +200,7 @@ export class HomeComponent implements OnInit {
 
     this.paginacao.pagina = event.pageIndex + 1;
     this.pedidoService
-      .listAllPage(this.paginacao.pagina, event.pageSize, this.numeroPedidoDe, this.numeroPedidoAte, this.nomeFantasiaCliente)
+      .listAllPage(this.paginacao.pagina, event.pageSize, this.numeroPedidoDe, this.numeroPedidoAte, this.nomeFantasiaCliente, this.dataDe, this.dataAte)
       .subscribe((data: PedidoVendaProdutoList) => {
         this.dataSource = data.pedido_venda_produto;
         this.firstElement = data.pedido_venda_produto[0];
@@ -191,6 +220,23 @@ export class HomeComponent implements OnInit {
   }
 
   filterList() {
+
+    let dataDe: moment.Moment = moment.utc(this.daterange.value.start);
+    let dataFormatadaDe =  dataDe.format("DD/MM/YYYY");
+
+    let dataAte: moment.Moment = moment.utc(this.daterange.value.end);
+    let dataFormatadaAte =  dataAte.format("DD/MM/YYYY")
+
+    if(dataFormatadaDe == "Invalid date"|| dataFormatadaAte == "Invalid date"){
+      dataFormatadaDe = '';
+      dataFormatadaAte = '';
+      this.dataDe = '';
+      this.dataAte = '';
+    }
+
+    this.dataDe = dataFormatadaDe;
+    this.dataAte = dataFormatadaAte;
+
     if (this.numeroPedidoDe.length !== 0 && this.numeroPedidoAte.length !== 0) {
       if (parseInt(this.numeroPedidoDe) > parseInt(this.numeroPedidoAte)) {
           this.numeroPedidoErroState = true;
@@ -201,7 +247,7 @@ export class HomeComponent implements OnInit {
 
     this.mostrar = false;
     this.pedidoService
-      .listAllPage(this.paginacao.pagina, this.paginacao.registros, this.numeroPedidoDe, this.numeroPedidoAte, this.nomeFantasiaCliente)
+      .listAllPage(this.paginacao.pagina, this.paginacao.registros, this.numeroPedidoDe, this.numeroPedidoAte, this.nomeFantasiaCliente, this.dataDe, this.dataAte)
       .subscribe((data: PedidoVendaProdutoList) => {
         this.dataSource = data.pedido_venda_produto;
         this.firstElement = data.pedido_venda_produto[0];
@@ -249,6 +295,5 @@ export class HomeComponent implements OnInit {
       await this.delay(1000)
     }
   }
-
 
 }
