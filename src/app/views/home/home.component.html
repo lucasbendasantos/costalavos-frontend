@@ -23,6 +23,16 @@
         </mat-error>
       </mat-form-field>
 
+      <mat-form-field appearance="fill">
+        <mat-label>Digite um período</mat-label>
+        <mat-date-range-input [formGroup]="daterange" [rangePicker]="picker">
+          <input matStartDate formControlName="start" placeholder="Data Inicial">
+          <input matEndDate formControlName="end" placeholder="Data Final">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+
       <mat-form-field appearance="fill" class="example-full-width">
         <mat-label>Nome Fantasia Cliente </mat-label>
         <input matInput [(ngModel)]="nomeFantasiaCliente" />
