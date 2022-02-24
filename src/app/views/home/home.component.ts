@@ -1,6 +1,6 @@
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
@@ -80,6 +80,8 @@ export class HomeComponent implements OnInit {
 
   allComplete: boolean = false;
 
+  checkBoxs: boolean = false;
+
   listaParaDownload: any[] = [];
 
  daterange!: FormGroup
@@ -90,6 +92,7 @@ export class HomeComponent implements OnInit {
       .subscribe((data: PedidoVendaProdutoList) => {
         this.dataSource = data.pedido_venda_produto;
         this.firstElement = data.pedido_venda_produto[0];
+        this.setCheckBoxsStatus(this.dataSource);
         this.paginacao = {
           pagina: data.pagina - 1,
           registros: data.registros,
@@ -204,6 +207,7 @@ export class HomeComponent implements OnInit {
       .subscribe((data: PedidoVendaProdutoList) => {
         this.dataSource = data.pedido_venda_produto;
         this.firstElement = data.pedido_venda_produto[0];
+        this.setCheckBoxsStatus(this.dataSource);
 
         this.paginacao = {
           pagina: data.pagina - 1,
@@ -251,6 +255,7 @@ export class HomeComponent implements OnInit {
       .subscribe((data: PedidoVendaProdutoList) => {
         this.dataSource = data.pedido_venda_produto;
         this.firstElement = data.pedido_venda_produto[0];
+        this.setCheckBoxsStatus(this.dataSource);
         if(this.nomeFantasiaCliente !== ''){
           this.nomeFantasiaCliente = this.firstElement.cliente.nome_fantasia
         }
@@ -269,6 +274,7 @@ export class HomeComponent implements OnInit {
   }
 
   montaListaParaDownload(elemento: any){
+    this.allComplete = false;
     console.log(this.listaParaDownload)
     if(this.listaParaDownload.length !== 0){
 
@@ -294,6 +300,23 @@ export class HomeComponent implements OnInit {
       this.downloadAsPDF(this.listaParaDownload[i])
       await this.delay(1000)
     }
+  }
+
+  setAll(completed: boolean, ) {
+    this.allComplete = completed;
+    this.checkBoxs = completed
+
+    for(var i = 0; i < this.dataSource.length; i++){
+      this.dataSource[i].checked = completed;
+      this.montaListaParaDownload(this.dataSource[i])
+    }
+  }
+
+  setCheckBoxsStatus(dataSource: any){
+    for(var i = 0; i < dataSource.lengh; i ++){
+      dataSource[i].checked = false;
+    }
+    this.dataSource = dataSource;
   }
 
 }
