@@ -1,7 +1,11 @@
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+} from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { MatTable } from '@angular/material/table';
@@ -18,30 +22,35 @@ import { ElementDialogComponent } from './../../shared/element-dialog/element-di
 
 declare var require: any;
 
-const htmlToPdfmake = require("html-to-pdfmake");
+const htmlToPdfmake = require('html-to-pdfmake');
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
-
 
 export const MY_FORMATS = {
   parse: {
-      dateInput: 'LL'
+    dateInput: 'LL',
   },
   display: {
-      dateInput: 'DD-MM-YYYY',
-      monthYearLabel: 'YYYY',
-      dateA11yLabel: 'LL',
-      monthYearA11yLabel: 'YYYY'
-  }
+    dateInput: 'DD-MM-YYYY',
+    monthYearLabel: 'YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'YYYY',
+  },
 };
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  providers: [PedidoService,
-    {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'},
-  { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-  { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }],
+  providers: [
+    PedidoService,
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE],
+    },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+  ],
 })
 export class HomeComponent implements OnInit {
   @ViewChild(MatTable)
@@ -76,20 +85,33 @@ export class HomeComponent implements OnInit {
   numeroPedidoErroState = false;
   numeroPedidoErroMsg!: string;
   dataDe: any = '';
-  dataAte: any ='';
+  dataAte: any = '';
 
   allComplete: boolean = false;
 
+  checkBoxs: boolean = false;
+
   listaParaDownload: any[] = [];
 
- daterange!: FormGroup
+  daterange!: FormGroup;
+
+  elementoVisualizado: any;
 
   constructor(public dialog: MatDialog, public pedidoService: PedidoService) {
     this.pedidoService
-      .listAllPage(this.paginacao.pagina, this.paginacao.registros, this.numeroPedidoDe, this.numeroPedidoAte, this.nomeFantasiaCliente, this.dataDe, this.dataAte)
+      .listAllPage(
+        this.paginacao.pagina,
+        this.paginacao.registros,
+        this.numeroPedidoDe,
+        this.numeroPedidoAte,
+        this.nomeFantasiaCliente,
+        this.dataDe,
+        this.dataAte
+      )
       .subscribe((data: PedidoVendaProdutoList) => {
         this.dataSource = data.pedido_venda_produto;
         this.firstElement = data.pedido_venda_produto[0];
+        this.setCheckBoxsStatus(this.dataSource);
         this.paginacao = {
           pagina: data.pagina - 1,
           registros: data.registros,
@@ -104,10 +126,10 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.daterange =  new FormGroup({
+    this.daterange = new FormGroup({
       start: new FormControl(),
-      end: new FormControl()
-   })
+      end: new FormControl(),
+    });
   }
 
   openDialog(element: Pedido | null): void {
@@ -133,19 +155,37 @@ export class HomeComponent implements OnInit {
   }
 
   viewPDF(numeroPedido: number): void {
-    this.pedidoService
-      .getPedido(+numeroPedido)
-      .subscribe((data: PedidoVendaProduto) => {
-        console.log('DENTRO DO getPEDIDOS');
-        console.log(data);
-        this.element = data;
-        this.openDialog2(data);
-      });
+    if (this.elementoVisualizado !== undefined) {
+      if (parseInt(this.elementoVisualizado.pedido_venda_produto.cabecalho
+        .numero_pedido) == parseInt(numeroPedido+"")) {
+        this.openDialog2(this.elementoVisualizado);
+      }else{
+        this.mostrar = false;
+        this.pedidoService
+        .getPedido(+numeroPedido)
+        .subscribe((data: PedidoVendaProduto) => {
+          this.element = data;
+          this.elementoVisualizado = data;
+          this.openDialog2(data);
+          this.mostrar = true;
+        });
+      }
+    } else {
+      this.mostrar = false;
+      this.pedidoService
+        .getPedido(+numeroPedido)
+        .subscribe((data: PedidoVendaProduto) => {
+          console.log(data);
+          this.element = data;
+          this.elementoVisualizado = data;
+          this.openDialog2(data);
+          this.mostrar = true;
+        });
+    }
   }
 
   openDialog2(element: PedidoVendaProduto): void {
-    console.log('FORA DO GETPEDIDOS');
-    console.log(element);
+
 
     const dialogRef = this.dialog.open(ElementDialogComponent, {
       width: '100%',
@@ -187,23 +227,31 @@ export class HomeComponent implements OnInit {
   }
 
   pageNavigations(event: PageEvent) {
-
-      if (this.numeroPedidoDe.length !== 0 && this.numeroPedidoAte.length !== 0) {
-        if (parseInt(this.numeroPedidoDe) > parseInt(this.numeroPedidoAte)) {
-            this.numeroPedidoErroState = true;
-            this.numeroPedidoErroMsg = "Número pedido DE precisa ser MAIOR que ATE"
-        }
+    if (this.numeroPedidoDe.length !== 0 && this.numeroPedidoAte.length !== 0) {
+      if (parseInt(this.numeroPedidoDe) > parseInt(this.numeroPedidoAte)) {
+        this.numeroPedidoErroState = true;
+        this.numeroPedidoErroMsg = 'Número pedido DE precisa ser MAIOR que ATE';
       }
+    }
 
     this.mostrar = false;
     console.log(event);
 
     this.paginacao.pagina = event.pageIndex + 1;
     this.pedidoService
-      .listAllPage(this.paginacao.pagina, event.pageSize, this.numeroPedidoDe, this.numeroPedidoAte, this.nomeFantasiaCliente, this.dataDe, this.dataAte)
+      .listAllPage(
+        this.paginacao.pagina,
+        event.pageSize,
+        this.numeroPedidoDe,
+        this.numeroPedidoAte,
+        this.nomeFantasiaCliente,
+        this.dataDe,
+        this.dataAte
+      )
       .subscribe((data: PedidoVendaProdutoList) => {
         this.dataSource = data.pedido_venda_produto;
         this.firstElement = data.pedido_venda_produto[0];
+        this.setCheckBoxsStatus(this.dataSource);
 
         this.paginacao = {
           pagina: data.pagina - 1,
@@ -220,14 +268,16 @@ export class HomeComponent implements OnInit {
   }
 
   filterList() {
-
     let dataDe: moment.Moment = moment.utc(this.daterange.value.start);
-    let dataFormatadaDe =  dataDe.format("DD/MM/YYYY");
+    let dataFormatadaDe = dataDe.format('DD/MM/YYYY');
 
     let dataAte: moment.Moment = moment.utc(this.daterange.value.end);
-    let dataFormatadaAte =  dataAte.format("DD/MM/YYYY")
+    let dataFormatadaAte = dataAte.format('DD/MM/YYYY');
 
-    if(dataFormatadaDe == "Invalid date"|| dataFormatadaAte == "Invalid date"){
+    if (
+      dataFormatadaDe == 'Invalid date' ||
+      dataFormatadaAte == 'Invalid date'
+    ) {
       dataFormatadaDe = '';
       dataFormatadaAte = '';
       this.dataDe = '';
@@ -239,20 +289,28 @@ export class HomeComponent implements OnInit {
 
     if (this.numeroPedidoDe.length !== 0 && this.numeroPedidoAte.length !== 0) {
       if (parseInt(this.numeroPedidoDe) > parseInt(this.numeroPedidoAte)) {
-          this.numeroPedidoErroState = true;
-          this.numeroPedidoErroMsg = "Número pedido DE precisa ser MAIOR que ATE"
+        this.numeroPedidoErroState = true;
+        this.numeroPedidoErroMsg = 'Número pedido DE precisa ser MAIOR que ATE';
       }
     }
 
-
     this.mostrar = false;
     this.pedidoService
-      .listAllPage(this.paginacao.pagina, this.paginacao.registros, this.numeroPedidoDe, this.numeroPedidoAte, this.nomeFantasiaCliente, this.dataDe, this.dataAte)
+      .listAllPage(
+        this.paginacao.pagina,
+        this.paginacao.registros,
+        this.numeroPedidoDe,
+        this.numeroPedidoAte,
+        this.nomeFantasiaCliente,
+        this.dataDe,
+        this.dataAte
+      )
       .subscribe((data: PedidoVendaProdutoList) => {
         this.dataSource = data.pedido_venda_produto;
         this.firstElement = data.pedido_venda_produto[0];
-        if(this.nomeFantasiaCliente !== ''){
-          this.nomeFantasiaCliente = this.firstElement.cliente.nome_fantasia
+        this.setCheckBoxsStatus(this.dataSource);
+        if (this.nomeFantasiaCliente !== '') {
+          this.nomeFantasiaCliente = this.firstElement.cliente.nome_fantasia;
         }
         this.paginacao = {
           pagina: data.pagina - 1,
@@ -268,32 +326,50 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  montaListaParaDownload(elemento: any){
-    console.log(this.listaParaDownload)
-    if(this.listaParaDownload.length !== 0){
+  montaListaParaDownload(elemento: any) {
+    this.allComplete = false;
+    console.log(this.listaParaDownload);
+    if (this.listaParaDownload.length !== 0) {
+      for (var i = 0; i < this.listaParaDownload.length; i++) {
+        var elementoNalista = this.listaParaDownload[i];
 
-    for(var i = 0; i < this.listaParaDownload.length; i++){
-
-      var elementoNalista = this.listaParaDownload[i];
-
-      if(elemento.cabecalho.numero_pedido === elementoNalista.cabecalho.numero_pedido){
-        this.listaParaDownload.splice(i, 1);
-        console.log(this.listaParaDownload)
-        return;
+        if (
+          elemento.cabecalho.numero_pedido ===
+          elementoNalista.cabecalho.numero_pedido
+        ) {
+          this.listaParaDownload.splice(i, 1);
+          console.log(this.listaParaDownload);
+          return;
+        }
       }
     }
-  }
 
     this.listaParaDownload.push(elemento);
-    console.log(this.listaParaDownload)
+    console.log(this.listaParaDownload);
   }
 
-  public async  downloadAllPDFs(){
-    for(var i = 0; i < this.listaParaDownload.length; i++){
-      await this.delay(1000)
-      this.downloadAsPDF(this.listaParaDownload[i])
-      await this.delay(1000)
+  public async downloadAllPDFs() {
+    for (var i = 0; i < this.listaParaDownload.length; i++) {
+      await this.delay(1000);
+      this.downloadAsPDF(this.listaParaDownload[i]);
+      await this.delay(1000);
     }
   }
 
+  setAll(completed: boolean) {
+    this.allComplete = completed;
+    this.checkBoxs = completed;
+
+    for (var i = 0; i < this.dataSource.length; i++) {
+      this.dataSource[i].checked = completed;
+      this.montaListaParaDownload(this.dataSource[i]);
+    }
+  }
+
+  setCheckBoxsStatus(dataSource: any) {
+    for (var i = 0; i < dataSource.lengh; i++) {
+      dataSource[i].checked = false;
+    }
+    this.dataSource = dataSource;
+  }
 }
