@@ -330,10 +330,9 @@
       <p>&nbsp;</p>
     </div>
   </div>
-  <div mat-dialog-actions>
-    <button mat-button (click)="onCancel()">Cancelar</button>
+  <div mat-dialog-actions class="alinhamento" >
+    <button mat-flat-button color="primary" (click)="downloadAsPDF()"><mat-icon>vertical_align_bottom</mat-icon></button>
     <button mat-button [mat-dialog-close]="" cdkFocusInitial>Ok</button>
-    <button mat-button (click)="downloadAsPDF()">PDF</button>
   </div>
 </div>
 <ng-template #loading>
